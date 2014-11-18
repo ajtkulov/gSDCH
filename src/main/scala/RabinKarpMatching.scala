@@ -7,4 +7,12 @@ object RabinKarpMatching {
   def wellKnownString(values : StringStatisticSet) : String = {
     ???
   }
+
+  def hash(str : String, len : Int, cache : RollingHash) : RollingHash = {
+    if (str.length < len) {
+      cache
+    } else {
+      ???
+    }
+  }
 }
