@@ -20,4 +20,10 @@ class RabinKarpMatchingTests extends FunSuite {
 
     assert(context.countTable.keySet.size == 3)
   }
+
+  test("RabinKarpMatchingTest - 3") {
+    val res = RabinKarpMatching.commonSubstring("abcabc")
+
+    assert(res == "abc")
+  }
 }
