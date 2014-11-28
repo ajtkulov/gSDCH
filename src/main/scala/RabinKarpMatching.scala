@@ -23,38 +23,36 @@ object RabinKarpMatching {
       }
     }
 
-    def getMax : ListBuffer[Position] = {
+    def getBestPositions : ListBuffer[Position] = {
       val pair: (HashValue, Int) = countTable.maxBy(x => x._2)
       positionTable(pair._1)
     }
   }
 
-  def newContext : Context = Context(mutable.Map[HashValue, Int](), mutable.Map[HashValue, ListBuffer[Position]]())
+  def newContext() : Context = Context(mutable.Map[HashValue, Int](), mutable.Map[HashValue, ListBuffer[Position]]())
 
   def wellKnownString(values : StringStatisticSet) : String = {
     ???
   }
 
-
-
   def commonSubstring(str : String) : String = {
-    var res: String = ""
-    var maxCount: Int = 0
+    var bestLength : Int = 0
+    var bestShift : Int = 0
     var maxEffect : Int = 0
 
-    for (i <- 1 to str.length) {
-      val context = newContext
-      hash(str, i, context)
+    for (len <- 1 to str.length) {
+      val context = newContext()
+      hash(str, len, context)
       val max: (HashValue, Int) = context.countTable.maxBy(x => x._2)
 
-      if (max._2 * i > maxEffect) {
-        maxEffect = max._2 * i
-        maxCount = i
-        res = str.substring(context.getMax(0), context.getMax(0) + i)
+      if (max._2 * len > maxEffect) {
+        maxEffect = max._2 * len
+        bestLength = len
+        bestShift = context.getBestPositions(0)
       }
     }
 
-    res
+    str.substring(bestShift, bestShift + bestLength)
   }
 
   def hash(str : String, len : Int, context : Context) : Context = {
