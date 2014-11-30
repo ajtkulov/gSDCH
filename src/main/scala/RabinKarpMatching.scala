@@ -6,6 +6,7 @@ import scala.collection.mutable.ListBuffer
 trait RabinKarpMatching {
   type HashValue = Int
   type Position
+  type Input
   type PositionTable = scala.collection.mutable.Map[HashValue, scala.collection.mutable.ListBuffer[Position]]
   type CountTable = scala.collection.mutable.Map[HashValue, Int]
   lazy val base : Int = 10
@@ -28,12 +29,14 @@ trait RabinKarpMatching {
   }
 
   def newContext() : Context = Context(mutable.Map[HashValue, Int](), mutable.Map[HashValue, ListBuffer[Position]]())
-}
 
-object RabinKarpMatching extends RabinKarpMatching {
-  type Position = Int
+  def getString(input : Input) : String
+  def getProfit(input : Input) : Int
+  def getPosition(input : Input, shift : Int) : Position
 
-  def hash(str : String, len : Int, context : Context) : Context = {
+  def hash(input : Input, len : Int, context : Context) : Context = {
+    val str : String = getString(input)
+    val profit : Int = getProfit(input)
     if (str.length < len) {
       context
     } else {
@@ -46,16 +49,24 @@ object RabinKarpMatching extends RabinKarpMatching {
         }
       }
 
-      context.add(curHash, 0)
+      context.add(curHash, getPosition(input, 0), profit)
 
       for (i <- len to str.length - 1) {
         curHash = (curHash - str.charAt(i - len) * curPower) * base + str.charAt(i)
-        context.add(curHash, i - len + 1)
+        context.add(curHash, getPosition(input, i - len + 1), profit)
       }
 
       context
     }
   }
+}
+
+object RabinKarpMatching extends RabinKarpMatching {
+  type Position = Int
+  type Input = String
+
+  def getString(input : Input) : String = input
+  def getProfit(input : Input) : Int = 1
 
   def commonSubstring(str : String) : String = {
     var bestLength : Int = 0
@@ -76,4 +87,6 @@ object RabinKarpMatching extends RabinKarpMatching {
 
     str.substring(bestShift, bestShift + bestLength)
   }
+
+  def getPosition(input: Input, shift: Int): Position = shift
 }

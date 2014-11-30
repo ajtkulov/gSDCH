@@ -14,8 +14,6 @@ class WellKnownSubstringTests extends FunSuite {
       )
     ))
 
-    println(res)
-
     assert(res == "ef")
   }
 }
