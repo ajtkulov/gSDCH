@@ -1,11 +1,10 @@
 package greedySDCH
 
-import greedySDCH.Model.{Id, Frequency, StringStatisticSet}
+import greedySDCH.Model._
 
 object WellKnownSubstring extends RabinKarpMatching {
   type Position = (Id, Int)
   type Input = (String, Frequency, Id)
-
 
   def wellKnownString(values : StringStatisticSet) : String = {
     var bestLength : Int = 0
