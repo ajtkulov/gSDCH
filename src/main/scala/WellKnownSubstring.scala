@@ -6,14 +6,14 @@ object WellKnownSubstring extends RabinKarpMatching {
   type Position = (Id, Int)
   type Input = (String, Frequency, Id)
 
-  def wellKnownString(values : StringStatisticSet) : String = {
+  def wellKnownString(values : StringStatisticSet, leftBorder : Int = 1, rightBorder : Int = Int.MaxValue) : String = {
     var bestLength : Int = 0
     var bestPosition : Position = (0, 0)
     var maxEffect : Int = 0
 
     val maxLength: Int = values.values.maxBy(x => x._1.length)._1.length
 
-    for (len <- 1 to maxLength) {
+    for (len <- leftBorder to Math.min(rightBorder, maxLength)) {
       val context = newContext()
       for (struct <- values.values) {
         hash(struct, len, context)
