@@ -21,8 +21,14 @@ class RabinKarpMatchingTests extends FunSuite {
   }
 
   test("RabinKarpMatchingTest - 3") {
-    val res = RabinKarpMatching.commonSubstring("abcabc")
+    val res = RabinKarpMatching.longestCommonSubstring("abcabc")
 
     assert(res == "abc")
+  }
+
+  test("RabinKarpMatchingTest - 4") {
+    val res = RabinKarpMatching.longestCommonSubstring("webkit-transitionsdnflksd hjoiewrj oir woeihwehroi wehorhjweo rjowewebkit-transition")
+
+    assert(res == "webkit-transition")
   }
 }

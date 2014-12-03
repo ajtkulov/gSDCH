@@ -2,6 +2,8 @@ package greedySDCH
 
 import greedySDCH.Model._
 
+import scala.collection.mutable.ListBuffer
+
 object WellKnownSubstring extends RabinKarpMatching {
   type Position = (Id, Int)
   type Input = (String, Frequency, Id)
@@ -13,18 +15,20 @@ object WellKnownSubstring extends RabinKarpMatching {
 
     val maxLength: Int = values.values.maxBy(x => x._1.length)._1.length
 
-    for (len <- leftBorder to Math.min(rightBorder, maxLength)) {
+    val right: Int = Math.min(rightBorder, maxLength)
+
+    for (len <- leftBorder to right) {
       val context = newContext()
       for (struct <- values.values) {
         hash(struct, len, context)
       }
 
-      val max: (HashValue, Int) = context.countTable.maxBy(x => x._2)
+      val max: (ListBuffer[(Id, Int)], Int) = context.getBestPositions
 
       if (max._2 * len > maxEffect) {
         maxEffect = max._2 * len
         bestLength = len
-        bestPosition = context.getBestPositions(0)
+        bestPosition = max._1(0)
       }
     }
 

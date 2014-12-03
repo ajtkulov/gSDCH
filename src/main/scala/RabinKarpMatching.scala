@@ -9,7 +9,7 @@ trait RabinKarpMatching {
   type Input
   type PositionTable = scala.collection.mutable.Map[HashValue, scala.collection.mutable.ListBuffer[Position]]
   type CountTable = scala.collection.mutable.Map[HashValue, Int]
-  lazy val base : Int = 10
+  lazy val base : Int = 31
 
   case class Context(countTable : CountTable, positionTable : PositionTable) {
     def add(hashValue : HashValue, position : Position, profit : Int = 1) : Unit = {
@@ -22,9 +22,23 @@ trait RabinKarpMatching {
       }
     }
 
-    def getBestPositions : ListBuffer[Position] = {
-      val pair: (HashValue, Int) = countTable.maxBy(x => x._2)
-      positionTable(pair._1)
+    def getBestPositions : (ListBuffer[Position], Int) = {
+      val ar: Array[(HashValue, Int)] = countTable.toArray.sortBy(x => x._2).reverse
+      var i = 0
+      var find = false
+      while (i < ar.length && !find) {
+        if (positionTable(ar(i)._1).length > 1) {
+          find = true
+        } else {
+          i = i + 1
+        }
+      }
+
+      if (find) {
+        (positionTable(ar(i)._1), countTable(ar(i)._1))
+      } else {
+        (ListBuffer(), 0)
+      }
     }
   }
 
@@ -40,7 +54,7 @@ trait RabinKarpMatching {
     if (str.length < len) {
       context
     } else {
-      var curHash : Int = 0
+      var curHash : HashValue = 0
       var curPower = 1
       for (i <- len - 1 to 0 by -1) {
         curHash += str.charAt(i) * curPower
@@ -66,22 +80,22 @@ object RabinKarpMatching extends RabinKarpMatching {
   type Input = String
 
   def getString(input : Input) : String = input
-  def getProfit(input : Input) : Int = 1
+  def getProfit(input : Input) : Int = input.length
 
-  def commonSubstring(str : String) : String = {
+  def longestCommonSubstring(str : String, leftBorder : Int = 1, rightBorder : Int = Int.MaxValue) : String = {
     var bestLength : Int = 0
     var bestShift : Int = 0
     var maxEffect : Int = 0
 
-    for (len <- 1 to str.length) {
+    for (len <- leftBorder to Math.min(str.length, rightBorder)) {
+      println(len)
       val context = newContext()
       hash(str, len, context)
-      val max: (HashValue, Int) = context.countTable.maxBy(x => x._2)
+      val max: Array[(RabinKarpMatching.HashValue, ListBuffer[Position])] = context.positionTable.filter(x => x._2.length > 1).toArray.take(1)
 
-      if (max._2 * len > maxEffect) {
-        maxEffect = max._2 * len
+      if (max.length > 0) {
         bestLength = len
-        bestShift = context.getBestPositions(0)
+        bestShift = max(0)._2(0)
       }
     }
 
