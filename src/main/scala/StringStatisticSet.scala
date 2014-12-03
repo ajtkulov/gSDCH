@@ -10,7 +10,7 @@ object Model {
     def removeSubString(value : String) : StringStatisticSet = {
       StringStatisticSet(values.map(x =>
       {
-        val split = x._1.split(value)
+        val split = StringUtils.split(x._1, value)
         split.map(z => (z, x._2, x._3))
       }).flatten)
     }

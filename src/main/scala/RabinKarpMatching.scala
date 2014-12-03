@@ -88,7 +88,6 @@ object RabinKarpMatching extends RabinKarpMatching {
     var maxEffect : Int = 0
 
     for (len <- leftBorder to Math.min(str.length, rightBorder)) {
-      println(len)
       val context = newContext()
       hash(str, len, context)
       val max: Array[(RabinKarpMatching.HashValue, ListBuffer[Position])] = context.positionTable.filter(x => x._2.length > 1).toArray.take(1)
