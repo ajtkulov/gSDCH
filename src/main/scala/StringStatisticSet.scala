@@ -14,5 +14,11 @@ object Model {
         split.map(z => (z, x._2, x._3))
       }).flatten)
     }
+
+    override def toString : String = {
+      values.map(x =>
+        s"""Part: freq = ${x._2}; id = ${x._3}; length = ${x._1.length}
+           |${x._1.take(128)}""".stripMargin).mkString("\n")
+    }
   }
 }

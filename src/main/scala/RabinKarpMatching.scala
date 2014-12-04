@@ -85,7 +85,6 @@ object RabinKarpMatching extends RabinKarpMatching {
   def longestCommonSubstring(str : String, leftBorder : Int = 1, rightBorder : Int = Int.MaxValue) : String = {
     var bestLength : Int = 0
     var bestShift : Int = 0
-    var maxEffect : Int = 0
 
     for (len <- leftBorder to Math.min(str.length, rightBorder)) {
       val context = newContext()

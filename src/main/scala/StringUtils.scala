@@ -8,8 +8,10 @@ object StringUtils {
     var cur = str
     var pos = cur.indexOf(pattern)
     while (pos != -1) {
-      res.append(cur.substring(0, pos))
-      cur = cur.substring(pos + 1)
+      if (pos > 0) {
+        res.append(cur.substring(0, pos))
+      }
+      cur = cur.substring(pos + pattern.length)
       pos = cur.indexOf(pattern)
     }
 
