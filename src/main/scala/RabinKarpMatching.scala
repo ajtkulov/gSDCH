@@ -4,7 +4,7 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 trait RabinKarpMatching {
-  type HashValue = Int
+  type HashValue = Long
   type Position
   type Input
   type PositionTable = scala.collection.mutable.Map[HashValue, scala.collection.mutable.ListBuffer[Position]]
@@ -55,7 +55,7 @@ trait RabinKarpMatching {
       context
     } else {
       var curHash : HashValue = 0
-      var curPower = 1
+      var curPower : HashValue = 1
       for (i <- len - 1 to 0 by -1) {
         curHash += str.charAt(i) * curPower
         if (i > 0) {
@@ -80,7 +80,7 @@ object RabinKarpMatching extends RabinKarpMatching {
   type Input = String
 
   def getString(input : Input) : String = input
-  def getProfit(input : Input) : Int = input.length
+  def getProfit(input : Input) : Int = 1
 
   def longestCommonSubstring(str : String, leftBorder : Int = 1, rightBorder : Int = Int.MaxValue) : String = {
     var bestLength : Int = 0
