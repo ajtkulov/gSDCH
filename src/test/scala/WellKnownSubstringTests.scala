@@ -16,7 +16,7 @@ class WellKnownSubstringTests extends FunSuite {
     assert(res == "ef")
   }
 
-  test("css") {
+  ignore("css") {
     var input = StringStatisticSet(
       Seq[(String, Frequency, Id)]((FileUtils.readFile("data/css/1.css"), 1, 1),
         (FileUtils.readFile("data/css/2.css"), 1, 2)
