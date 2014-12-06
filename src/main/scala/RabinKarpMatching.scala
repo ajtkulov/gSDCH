@@ -22,12 +22,12 @@ trait RabinKarpMatching {
       }
     }
 
-    def getBestPositions : (ListBuffer[Position], Int) = {
+    def getBestPositions(minFrequency : Int = 1) : (ListBuffer[Position], Int) = {
       val ar: Array[(HashValue, Int)] = countTable.toArray.sortBy(x => x._2).reverse
       var i = 0
       var find = false
       while (i < ar.length && !find) {
-        if (positionTable(ar(i)._1).length > 1) {
+        if (positionTable(ar(i)._1).length > minFrequency) {
           find = true
         } else {
           i = i + 1

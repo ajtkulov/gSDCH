@@ -13,13 +13,13 @@ object Examples {
     }
   }
 
-  def longestSubstring() = {
+  def longestSubstring(minFrequency : Int = 1) = {
     var input = readInput()
 
     var flag = true
     var rightBorder = Int.MaxValue
     while (flag) {
-      val res = LongestCommonSubstring.longestCommonSubstring(input, 4, rightBorder)
+      val res = LongestCommonSubstring.longestCommonSubstring(input, minFrequency, 4, rightBorder)
       res match {
         case Some(str) => {
           rightBorder = str.length;

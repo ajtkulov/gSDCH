@@ -23,7 +23,7 @@ trait WellKnownSubstring extends RabinKarpMatching {
         hash(struct, len, context)
       }
 
-      val max: (ListBuffer[(Id, Int)], Int) = context.getBestPositions
+      val max: (ListBuffer[(Id, Int)], Int) = context.getBestPositions()
 
       if (max._2 * len > maxEffect) {
         maxEffect = max._2 * len
