@@ -3,6 +3,7 @@ package greedySDCH
 object Main extends App {
 
   override def main(args : Array[String]) {
-    Examples.test()
+    Examples.longestSubstring()
+//    Examples.wellKnownSubstring()
   }
 }

@@ -4,11 +4,11 @@ import greedySDCH.Model._
 
 import scala.collection.mutable.ListBuffer
 
-object WellKnownSubstring extends RabinKarpMatching {
+trait WellKnownSubstring extends RabinKarpMatching {
   type Position = (Id, Int)
   type Input = (String, Frequency, Id)
 
-  def wellKnownString(values : StringStatisticSet, leftBorder : Int = 1, rightBorder : Int = Int.MaxValue) : String = {
+  def wellKnownSubstring(values : StringStatisticSet, leftBorder : Int = 1, rightBorder : Int = Int.MaxValue) : String = {
     var bestLength : Int = 0
     var bestPosition : Position = (0, 0)
     var maxEffect : Int = 0
@@ -41,3 +41,5 @@ object WellKnownSubstring extends RabinKarpMatching {
 
   override def getPosition(input: Input, shift: Int): Position = (input._3, shift)
 }
+
+object WellKnownSubstring extends WellKnownSubstring {}

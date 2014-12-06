@@ -6,7 +6,7 @@ import org.scalatest.FunSuite
 
 class WellKnownSubstringTests extends FunSuite {
   test("WellKnownSubstring") {
-    val res = WellKnownSubstring.wellKnownString(StringStatisticSet(
+    val res = WellKnownSubstring.wellKnownSubstring(StringStatisticSet(
       Seq[(String, Frequency, Id)](("ababab", 1, 1),
         ("cdcdcdcd", 1, 2),
         ("efef", 4, 4)
@@ -23,7 +23,7 @@ class WellKnownSubstringTests extends FunSuite {
       ))
 
     for (i <- 1 to 10) {
-      val res = WellKnownSubstring.wellKnownString(input, 5, 100)
+      val res = WellKnownSubstring.wellKnownSubstring(input, 5, 100)
       input = input.removeSubString(res)
       println(res)
     }
