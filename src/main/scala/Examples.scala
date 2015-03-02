@@ -36,10 +36,11 @@ object Examples {
   }
 
   def readInput(): StringStatisticSet = {
-    StringStatisticSet(
-      Seq[(String, Frequency, Id)](
-        (FileUtils.readFile("data/css/1.css"), 1, 1),
-        (FileUtils.readFile("data/css/2.css"), 1, 2)
-      ))
+    val files: Array[(String, Int)] = FileUtils.filesInDirectory("data")
+      .filter(x => x.isFile && (x.getName.contains(".css") || x.getName.contains(".js")))
+      .map(x => x.getAbsolutePath)
+      .zipWithIndex
+
+    StringStatisticSet(files.map((x : (String, Int)) => (FileUtils.readFile(x._1), 1, x._2)))
   }
 }
