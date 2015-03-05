@@ -8,7 +8,7 @@ object Examples {
 
     for (i <- 1 to 30) {
       val res = WellKnownSubstring.wellKnownSubstring(input, 5, 150)
-      input = input.removeSubString(res)
+      input = input.removeSubString(res)._1
       println(res)
     }
   }
@@ -18,18 +18,23 @@ object Examples {
 
     var flag = true
     var rightBorder = Int.MaxValue
+    var totalEconomy: Long = 0
     while (flag) {
-      val res = LongestCommonSubstring.longestCommonSubstring(input, minFrequency, 4, rightBorder)
+      val res: Option[String] = LongestCommonSubstring.longestCommonSubstring(input, minFrequency, 4, rightBorder)
       res match {
         case Some(str) => {
           rightBorder = str.length;
-          input = input.removeSubString(str);
+          val r = input.removeSubString(str);
+          input = r._1
+          totalEconomy = totalEconomy + r._2
 
           println();
           println(str);
-          println(str.length);
-          println(s"Size = ${input.values.length}; Total lenght = ${input.values.map(x => x._1.length).sum}")
+          println(s"length of pattern = ${str.length}");
+          println(s"Set size = ${input.values.length}; Total length = ${input.values.map(x => x._1.length).sum}")
+          println(s"Economy = ${r._2}; Total economy = ${totalEconomy}")
         }
+
         case None => flag = false
       }
     }
