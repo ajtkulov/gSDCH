@@ -27,7 +27,8 @@ object Examples {
         input = r._1
         totalEconomy = totalEconomy + r._2
 
-        println(s"Pattern id=${idx}")
+        println()
+        println(s"Pattern id=${idx}:")
         idx = idx + 1
         println(str)
         println(s"length of pattern = ${str.length}")

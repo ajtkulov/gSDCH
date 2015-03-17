@@ -8,13 +8,14 @@ object Model {
     def getStringById(id : Id) : String = values.filter(x => x._3 == id).head._1
 
     def removeSubString(value : String) : (StringStatisticSet, Long) = {
-      val size = values.size
+      val inputSize = values.map(x => x._1.length).sum
       val flatten: Seq[((String, Frequency), Int)] = values.map(x => {
         val split: Array[String] = StringUtils.split(x._1, value)
         split.map(z => (z, x._2))
       }).flatten.zipWithIndex
       val set: StringStatisticSet = StringStatisticSet(flatten.map(x => (x._1._1, x._1._2, x._2)))
-      (set, value.length * (set.values.size - size))
+      val finalSize = set.values.map(x => x._1.length).sum
+      (set, inputSize - finalSize)
     }
 
     def toOneString : StringStatisticSet = {
