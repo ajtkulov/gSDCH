@@ -24,7 +24,7 @@ class WellKnownSubstringTests extends FunSuite {
 
     for (i <- 1 to 10) {
       val res = WellKnownSubstring.wellKnownSubstring(input, 5, 100)
-      input = input.removeSubString(res)
+      input = input.removeSubString(res)._1
       println(res)
     }
   }

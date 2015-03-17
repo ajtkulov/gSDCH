@@ -10,7 +10,7 @@ object Model {
     def removeSubString(value : String) : (StringStatisticSet, Long) = {
       val size = values.size
       val flatten: Seq[((String, Frequency), Int)] = values.map(x => {
-        val split = StringUtils.split(x._1, value)
+        val split: Array[String] = StringUtils.split(x._1, value)
         split.map(z => (z, x._2))
       }).flatten.zipWithIndex
       val set: StringStatisticSet = StringStatisticSet(flatten.map(x => (x._1._1, x._1._2, x._2)))
